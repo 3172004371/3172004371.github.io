@@ -122,6 +122,8 @@ function openMemberPanel(member) {
 
     // 默认选中成员根目录
     selectPath([member.title]);
+    // 新增：成员面板打开后强制同步高度（关键修复）
+    syncPanelHeights();
 }
 
 // 渲染文件树
@@ -279,6 +281,7 @@ function selectPath(path) {
             `;
         }
         updateTreeSelection(path);
+        syncPanelHeights(); // 内容加载后同步高度
         return;
     }
 
@@ -339,6 +342,7 @@ function selectPath(path) {
     }
 
     updateTreeSelection(path);
+    syncPanelHeights(); // 内容加载后同步高度
 }
 
 // 提取树选择逻辑为单独函数
@@ -451,12 +455,9 @@ function expandParentNodes(node) {
 
 // 渲染文件视图
 function renderFileView(file, container) {
-    console.log("正在渲染文件视图:", file);
-
-    // 创建文件内容容器
     const fileContent = document.createElement('div');
-    fileContent.className = 'file-content';
-
+    fileContent.className = 'file-content w-full';
+    console.log("正在渲染文件视图:", file);
     // 获取文件图标和颜色
     const { iconClass, iconColor } = getIconAndColor(file);
 
@@ -477,6 +478,79 @@ function renderFileView(file, container) {
     let contentHtml = '';
 
     if (isCodeFile(file.type)) {
+        fetch(file.file)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`加载文件失败: ${response.status} ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(content => {
+                const codeView = fileContent.querySelector('.code-view');
+                codeView.innerHTML = '';
+
+                // 添加行号和代码内容
+                const lines = content.split('\n');
+                lines.forEach((line, index) => {
+                    const lineEl = document.createElement('div');
+                    lineEl.className = 'code-line';
+                    const lineNumber = document.createElement('span');
+                    lineNumber.className = 'line-number';
+                    lineNumber.textContent = index + 1;
+
+                    const lineContent = document.createElement('span');
+                    lineContent.className = 'line-content';
+
+                    const code = document.createElement('code');
+                    code.className = 'language-' + file.type;
+                    code.textContent = line;
+                    lineContent.appendChild(code);
+
+                    lineEl.appendChild(lineNumber);
+                    lineEl.appendChild(lineContent);
+                    codeView.appendChild(lineEl);
+
+                    // 点击高亮效果
+                    lineEl.addEventListener('click', () => {
+                        document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active'));
+                        lineEl.classList.add('active');
+                    });
+
+                    // 调用 highlight.js 语法高亮
+                    if (window.hljs) hljs.highlightElement(code);
+                });
+
+                // 设置预览功能
+                if (file.type === 'html') {
+                    const toggleBtn = fileContent.querySelector('#toggle-preview');
+                    const previewContainer = fileContent.querySelector('#preview-container');
+                    const codeContainer = fileContent.querySelector('#code-container');
+                    const previewFrame = fileContent.querySelector('#preview-frame');
+
+                    toggleBtn.addEventListener('click', () => {
+                        const isPreviewHidden = previewContainer.classList.contains('hidden');
+                        previewContainer.classList.toggle('hidden');
+                        codeContainer.classList.toggle('hidden');
+
+                        toggleBtn.innerHTML = isPreviewHidden ?
+                            '<i class="fa fa-code mr-1"></i> 代码' :
+                            '<i class="fa fa-eye mr-1"></i> 预览';
+
+                        if (isPreviewHidden) {
+                            const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+                            doc.open();
+                            doc.write(content);
+                            doc.close();
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('加载文件时出错:', error);
+                fileContent.querySelector('.code-view').innerHTML = `
+                    <div class="text-red-500 p-4">加载文件失败: ${error.message}</div>
+                `;
+            });
         contentHtml = renderCodeFileContent(file);
     } else if (file.type === 'word') {
         contentHtml = renderWordDocContent(file);
@@ -494,18 +568,6 @@ function renderFileView(file, container) {
     // 清空容器并添加文件内容
     container.innerHTML = '';
     container.appendChild(fileContent);
-
-    // 如果是代码文件，加载内容并应用语法高亮
-    if (isCodeFile(file.type)) {
-        loadCodeFileContent(file, container);
-    }
-
-    // 为HTML文件添加预览功能
-    if (file.type === 'html') {
-        setupHtmlPreview(file, container);
-    }
-
-    console.log('文件视图已渲染完成');
 }
 
 // 辅助函数：判断是否为代码文件
@@ -532,9 +594,10 @@ function getFileActions(file) {
             <a href="${file.file}" target="_blank" class="text-[--color-primary] hover:underline">
                 <i class="fa fa-external-link mr-1"></i>在新标签页打开
             </a>
+            <a href="${file.file}" download class="text-[--color-primary] hover:underline">
+                <i class="fa fa-download mr-1"></i> 下载
+            </a>
         `;
-
-
         return actions;
     } else {
         // 非代码文件使用下载或查看按钮
@@ -550,24 +613,26 @@ function getFileActions(file) {
 // 辅助函数：渲染代码文件内容结构
 function renderCodeFileContent(file) {
     return `
-        <div class="flex flex-col lg:flex-row gap-4">
-            <div class="lg:w-1/2">
-                <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
-                    <span class="text-gray-300 text-sm font-mono">${file.title}</span>
-                </div>
-                <pre class="code-view bg-gray-900 text-gray-100 rounded-b-lg p-4 overflow-x-auto">
-                    <div class="text-center py-2">
-                        <i class="fa fa-spinner fa-spin mr-2"></i> 加载中...
+            <div class="flex flex-col w-full">
+                <div class="w-full" id="code-container">
+                    <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
+                        <span class="text-gray-300 text-sm font-mono">${file.title}</span>
                     </div>
-                </pre>
-            </div>
-            <div class="lg:w-1/2 hidden" id="preview-container">
-                <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
-                    <span class="text-gray-300 text-sm font-mono">预览</span>
+                    <pre class="code-view bg-gray-900 text-gray-100 rounded-b-lg p-4 overflow-x-auto">
+                        <div class="text-center py-2">
+                            <i class="fa fa-spinner fa-spin mr-2"></i> 加载中...
+                        </div>
+                    </pre>
                 </div>
-                <iframe id="preview-frame" class="w-full h-[500px] border border-gray-200 rounded-b-lg"></iframe>
+                ${file.type === 'html' ? `
+                    <div class="w-full hidden" id="preview-container">
+                        <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
+                            <span class="text-gray-300 text-sm font-mono">预览</span>
+                        </div>
+                        <iframe id="preview-frame" class="w-full h-[calc(100vh-300px)] min-h-[500px] border border-gray-200 rounded-b-lg"></iframe>
+                    </div>
+                ` : ''}
             </div>
-        </div>
     `;
 }
 
@@ -650,99 +715,6 @@ function getFileTypeTitle(fileType) {
     return titleMap[fileType] || `${fileType ? fileType.charAt(0).toUpperCase() + fileType.slice(1) : '未知'} 文件`;
 }
 
-// 辅助函数：加载代码文件内容
-function loadCodeFileContent(file, container) {
-    fetch(file.file)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`加载文件失败: ${response.status} ${response.statusText}`);
-            }
-            return response.text();
-        })
-        .then(content => {
-            // 更新代码视图内容
-            const codeView = container.querySelector('.code-view');
-            if (codeView) {
-                codeView.innerHTML = '';
-
-                // 添加行号和代码内容
-                const lines = content.split('\n');
-                lines.forEach((line, index) => {
-                    const lineEl = document.createElement('div');
-                    lineEl.className = 'code-line flex';
-                    lineEl.innerHTML = `
-                        <span class="line-number w-8 inline-block text-right mr-4 text-gray-500 select-none">${index + 1}</span>
-                        <span class="line-content">${escapeHtml(line)}</span>
-                    `;
-                    codeView.appendChild(lineEl);
-                });
-
-                // 应用语法高亮
-                if (window.hljs) {
-                    try {
-                        hljs.highlightElement(codeView);
-                    } catch (e) {
-                        console.error('语法高亮应用失败:', e);
-                    }
-                }
-            }
-        })
-        .catch(error => {
-            console.error('加载文件时出错:', error);
-            const codeView = container.querySelector('.code-view');
-            if (codeView) {
-                codeView.innerHTML = `<div class="text-red-500 p-4">加载文件失败: ${error.message}</div>`;
-            }
-        });
-}
-
-// 辅助函数：设置HTML预览功能
-function setupHtmlPreview(file, container) {
-    const toggleBtn = container.querySelector('#toggle-preview');
-    const previewContainer = container.querySelector('#preview-container');
-    const previewFrame = container.querySelector('#preview-frame');
-    const codeContainer = previewContainer?.previousElementSibling;
-
-    if (toggleBtn && previewContainer && previewFrame) {
-        toggleBtn.addEventListener('click', () => {
-            const isHidden = previewContainer.classList.contains('hidden');
-
-            // 切换预览区域显示状态
-            previewContainer.classList.toggle('hidden');
-
-            // 调整代码区域宽度
-            if (codeContainer) {
-                if (isHidden) {
-                    codeContainer.className = 'lg:w-1/2';
-                } else {
-                    codeContainer.className = 'w-full';
-                }
-            }
-
-            // 更新按钮文本
-            toggleBtn.innerHTML = isHidden ?
-                '<i class="fa fa-code mr-1"></i> 代码' :
-                '<i class="fa fa-eye mr-1"></i> 预览';
-
-            // 加载预览内容
-            if (isHidden) {
-                fetch(file.file)
-                    .then(response => response.text())
-                    .then(content => {
-                        const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
-                        doc.open();
-                        doc.write(content);
-                        doc.close();
-                    })
-                    .catch(error => {
-                        console.error('加载预览内容失败:', error);
-                        previewFrame.srcdoc = `<div style="color: red; padding: 20px;">加载预览失败: ${error.message}</div>`;
-                    });
-            }
-        });
-    }
-}
-
 // 辅助函数：HTML转义
 function escapeHtml(text) {
     return text
@@ -804,6 +776,43 @@ function getIconAndColor(item) {
 
     return { iconClass, iconColor };
 }
+
+// 同步左右两侧高度
+function syncPanelHeights() {
+    const panelContents = document.querySelectorAll('.panel-content');
+    panelContents.forEach(panel => {
+        const fileTree = panel.querySelector('.file-tree');
+        const contentView = panel.querySelector('.content-view');
+
+        if (fileTree && contentView) {
+            // 检查当前屏幕宽度是否大于768px（非移动端）
+            const isDesktop = window.innerWidth > 768;
+
+            if (isDesktop) {
+                // 桌面端：同步两侧高度
+                const treeHeight = fileTree.offsetHeight;
+                contentView.style.height = `${treeHeight}px`;
+            } else {
+                // 移动端：清除高度设置，使用CSS自动布局
+                contentView.style.height = '';
+            }
+        }
+    });
+}
+
+// 初始同步
+document.addEventListener('DOMContentLoaded', syncPanelHeights);
+
+// 窗口大小改变时同步
+window.addEventListener('resize', syncPanelHeights);
+
+// 面板内容加载完成后同步（例如文件树展开时）
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.tree-item') || e.target.closest('.close-panel')) {
+        // 延迟执行以确保DOM更新完成
+        setTimeout(syncPanelHeights, 20);
+    }
+});
 
 // 初始化：从JSON文件加载数据并渲染
 async function initialize() {

@@ -295,56 +295,66 @@ a:hover {
     width: 100%;
 }
 
-/* 代码视图样式 */
+/* === 代码视图样式 === */
 .code-view {
-    padding: 1rem;
-    font-family: Consolas, Monaco, 'Andale Mono', monospace;
-    font-size: 0.875rem;
+    background-color: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+    font-size: 14px;
     line-height: 1;
-    white-space: pre;
     overflow-x: auto;
-    background-color: #f8f9fa; /* 浅灰背景 */
-    border: 1px solid #eaecef;
 }
 
-/* 代码行容器 - 修改为flex布局并垂直居中 */
 .code-line {
     display: flex;
-    align-items: center; /* 垂直居中 */
-    white-space: pre;
-    padding: 0.25rem 0; /* 减少行间距 */
-    border-radius: 2px;
+    gap: 1rem;
+    align-items: center;
+    padding: 4px 0;
+    position: relative;
+    cursor: pointer;
 }
 
-/* 行号样式 - 固定宽度并右对齐 */
 .line-number {
     color: #6c757d;
-    user-select: none;
+    min-width: 2.5rem;
     text-align: right;
-    min-width: 2.5rem; /* 缩小行号宽度 */
-    padding-right: 1rem;
-    margin-right: 1rem; /* 增加行号与代码的间距 */
+    padding-right: 0.75rem;
+    margin-right: 1rem;
+    border-right: 1px solid #e1e4e8;
+    user-select: none;
     opacity: 0.7;
-    border-right: 1px solid #eaecef; /* 细分隔线 */
 }
 
-/* 代码内容样式 */
 .line-content {
-    word-break: break-all;
-    white-space: pre-wrap;
     flex: 1;
-    font-feature-settings: "calt"; /* 优化字体连字 */
+    position: relative;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
-/* 悬停效果 */
-.code-line:hover {
-    background-color: #f0f1f3; /* 浅灰背景 */
+/* 高亮行 */
+.code-line.active {
+    background-color: #f0f8ff;
+    border-left: 3px solid #4299e1;
+}
+.code-line.active .line-content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background-color: #4299e1;
+    animation: blink 1s steps(2, start) infinite;
 }
 
-/* 选中行样式（可用于高亮当前行） */
-.code-line.active-line {
-    background-color: #e6f7ff; /* 淡蓝色背景 */
+@keyframes blink {
+    to {
+        visibility: hidden;
+    }
 }
+
 
 /* 空状态提示 */
 .empty-state {
@@ -358,6 +368,7 @@ a:hover {
 }
 
 /* 媒体查询，当屏幕宽度小于 768px 时调整布局 */
+/* 媒体查询，当屏幕宽度小于 768px 时调整布局 */
 @media (max-width: 768px) {
     .code-view {
         font-size: 0.75rem;
@@ -368,8 +379,11 @@ a:hover {
     .file-tree {
         border-right: none;
         border-bottom: 1px solid #eee;
+        width: 100%; /* 左侧文件树占据100%宽度 */
     }
-
+    .content-view {
+        display: none; /* 隐藏右侧内容区 */
+    }
 }
 
 /* 自定义工具类 */
@@ -437,40 +451,4 @@ a:hover {
 .hanoi-disk {
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* 深色模式支持 */
-.dark {
-    --color-light: #1D2939;
-    --color-dark: #F9FAFB;
-    background-color: var(--color-light);
-    color: var(--color-dark);
-}
-
-.dark .bg-white {
-    background-color: #2E3B55;
-}
-
-.dark .text-dark {
-    color: var(--color-dark);
-}
-
-.dark .text-light {
-    color: var(--color-light);
-}
-
-.dark .bg-gray-50 {
-    background-color: #374151;
-}
-
-.dark .border-gray-200 {
-    border-color: #4B5563;
-}
-
-.dark .shadow-md {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-}
-
-.dark .fa-arrow-up  {
-    color: #ffffff;
 }

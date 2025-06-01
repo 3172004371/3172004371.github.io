@@ -458,50 +458,40 @@ function renderFileView(file, container) {
     const fileContent = document.createElement('div');
     fileContent.className = 'file-content w-full';
     console.log("正在渲染文件视图:", file);
+    // 获取文件图标和颜色
+    const { iconClass, iconColor } = getIconAndColor(file);
 
-    if (file.type === 'html' || file.type === 'css' || file.type === 'javascript') {
-        fileContent.innerHTML = `
-            <div class="mb-4 flex justify-between items-center">
-                <div class="flex items-center">
-                    <i class="fa ${file.icon || 'fa-file-code'} text-blue-500 mr-2"></i>
-                    <h3 class="font-medium">${file.title}</h3>
-                </div>
-                <div class="flex space-x-4">
-                    ${file.type === 'html' ? `
-                        <button id="toggle-preview" class="text-[--color-primary] hover:underline">
-                            <i class="fa fa-eye mr-1"></i> 预览
-                        </button>
-                    ` : ''}
-                    <a href="${file.file}" target="_blank" class="text-[--color-primary] hover:underline">
-                        <i class="fa fa-external-link mr-1"></i> 在新标签页打开
-                    </a>
-                    <a href="${file.file}" download class="text-[--color-primary] hover:underline">
-                        <i class="fa fa-download mr-1"></i> 下载
-                    </a>
-                </div>
+    // 文件头部信息区域
+    const headerHtml = `
+        <div class="mb-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fa ${iconClass} ${iconColor} mr-2"></i>
+                <h3 class="font-medium">${file.title}</h3>
             </div>
-            <div class="flex flex-col w-full">
-                <div class="w-full" id="code-container">
-                    <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
-                        <span class="text-gray-300 text-sm font-mono">${file.title}</span>
-                    </div>
-                    <pre class="code-view bg-gray-900 text-gray-100 rounded-b-lg p-4 overflow-x-auto">
-                        <div class="text-center py-2">
-                            <i class="fa fa-spinner fa-spin mr-2"></i> 加载中...
-                        </div>
-                    </pre>
-                </div>
-                ${file.type === 'html' ? `
-                    <div class="w-full hidden" id="preview-container">
-                        <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
-                            <span class="text-gray-300 text-sm font-mono">预览</span>
-                        </div>
-                        <iframe id="preview-frame" class="w-full h-[calc(100vh-300px)] min-h-[500px] border border-gray-200 rounded-b-lg"></iframe>
-                    </div>
-                ` : ''}
+            <div class="flex space-x-4">
+                ${getFileActions(file)}
             </div>
+        </div>
+    `;
+
+    // 根据文件类型渲染不同内容
+    let contentHtml = '';
+
+    if (isCodeFile(file.type)) {
+        // 创建GitHub风格代码块容器
+        contentHtml = `
+            <div class="github-code-block">
+                <div class="line-numbers" id="code-line-numbers-${file.id}"></div>
+                <div class="code-content" id="code-content-${file.id}"></div>
+            </div>
+            
         `;
 
+        fileContent.innerHTML = headerHtml + contentHtml;
+        container.innerHTML = '';
+        container.appendChild(fileContent);
+
+        // 异步加载文件内容
         fetch(file.file)
             .then(response => {
                 if (!response.ok) {
@@ -510,30 +500,14 @@ function renderFileView(file, container) {
                 return response.text();
             })
             .then(content => {
-                const codeView = fileContent.querySelector('.code-view');
-                codeView.innerHTML = '';
-
-                // 添加行号和代码内容
-                const lines = content.split('\n');
-                lines.forEach((line, index) => {
-                    const lineEl = document.createElement('div');
-                    lineEl.className = 'code-line flex hover:bg-gray-800 transition-colors';
-                    lineEl.innerHTML = `
-                        <span class="line-number w-12 inline-block text-right mr-4 text-gray-500 select-none border-r border-gray-700 pr-2">${index + 1}</span>
-                        <span class="line-content font-mono">${escapeHtml(line)}</span>
-                    `;
-                    codeView.appendChild(lineEl);
-                });
-
-                if (window.hljs) {
-                    hljs.highlightElement(codeView);
-                }
+                // 使用新的GitHub风格代码块渲染
+                initGitHubCodeBlock(content, `code-line-numbers-${file.id}`, `code-content-${file.id}`);
 
                 // 设置预览功能
                 if (file.type === 'html') {
                     const toggleBtn = fileContent.querySelector('#toggle-preview');
                     const previewContainer = fileContent.querySelector('#preview-container');
-                    const codeContainer = fileContent.querySelector('#code-container');
+                    const codeContainer = fileContent.querySelector('.github-code-block');
                     const previewFrame = fileContent.querySelector('#preview-frame');
 
                     toggleBtn.addEventListener('click', () => {
@@ -556,54 +530,103 @@ function renderFileView(file, container) {
             })
             .catch(error => {
                 console.error('加载文件时出错:', error);
-                fileContent.querySelector('.code-view').innerHTML = `
-                    <div class="text-red-500 p-4">加载文件失败: ${error.message}</div>
-                `;
+                const codeContentEl = document.getElementById(`code-content-${file.id}`);
+                if (codeContentEl) {
+                    codeContentEl.innerHTML = `
+                        <div class="text-red-500 p-4">加载文件失败: ${error.message}</div>
+                    `;
+                }
             });
     } else if (file.type === 'word') {
-        fileContent.innerHTML = `
-            <div class="mb-4 flex justify-between items-center">
-                <div class="flex items-center">
-                    <i class="fa ${file.icon || 'fa-file-word'} text-blue-500 mr-2"></i>
-                    <h3 class="font-medium">${file.title}</h3>
-                </div>
-                <a href="${file.file}" download class="text-[--color-primary] hover:underline">
-                    <i class="fa fa-download mr-1"></i> 下载文档
-                </a>
-            </div>
-            <div class="p-8 bg-gray-50 rounded-lg text-center">
-                <i class="fa fa-file-word-o text-4xl text-blue-500 mb-4"></i>
-                <p class="text-gray-600">Word文档需要下载后查看</p>
-                <p class="text-sm text-gray-500 mt-2">点击上方"下载文档"按钮进行下载</p>
-            </div>
-        `;
+        contentHtml = renderWordDocContent(file);
+    } else if (file.type === 'pdf') {
+        contentHtml = renderPdfContent(file);
+    } else if (file.type === 'image') {
+        contentHtml = renderImageContent(file);
     } else {
-        fileContent.innerHTML = `
-            <div class="mb-4 flex justify-between items-center">
-                <div class="flex items-center">
-                    <i class="fa ${file.icon || 'fa-file'} text-blue-500 mr-2"></i>
-                    <h3 class="font-medium">${file.title}</h3>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="${file.file}" target="_blank" class="text-[--color-primary] hover:underline">
-                        <i class="fa fa-external-link mr-1"></i> 查看
-                    </a>
-                    <a href="${file.file}" download class="text-[--color-primary] hover:underline">
-                        <i class="fa fa-download mr-1"></i> 下载
-                    </a>
-                </div>
-            </div>
-            <div class="p-4 bg-gray-100 rounded-lg">
-                <p class="text-gray-600">这是一个 ${file.type || '文件'}</p>
-                <p class="mt-2">点击上方按钮查看或下载文件</p>
-            </div>
-        `;
+        contentHtml = renderGenericFileContent(file);
     }
 
+    // 组合完整的文件视图HTML
+    fileContent.innerHTML = headerHtml + contentHtml;
+
+    // 清空容器并添加文件内容
     container.innerHTML = '';
     container.appendChild(fileContent);
-    console.log('文件内容已添加到容器:', container);
 }
+
+// 初始化GitHub风格代码块
+function initGitHubCodeBlock(code, lineNumbersElId, codeContentElId) {
+    const lineNumbersEl = document.getElementById(lineNumbersElId);
+    const codeContentEl = document.getElementById(codeContentElId);
+
+    if (!lineNumbersEl || !codeContentEl) return;
+
+    // 分割代码为行
+    const lines = code.split('\n');
+
+    // 清空容器
+    lineNumbersEl.innerHTML = '';
+    codeContentEl.innerHTML = '';
+
+    // 渲染行号和代码
+    lines.forEach((line, index) => {
+        // 行号元素
+        const lineNumberEl = document.createElement('div');
+        lineNumberEl.className = 'line-number';
+        lineNumberEl.textContent = index + 1;
+        lineNumberEl.dataset.line = index;
+        lineNumbersEl.appendChild(lineNumberEl);
+
+        // 代码行元素
+        const codeLineEl = document.createElement('div');
+        codeLineEl.className = 'code-line';
+        codeLineEl.dataset.line = index;
+        codeLineEl.textContent = line;
+        codeContentEl.appendChild(codeLineEl);
+    });
+
+    // 初始化语法高亮
+    hljs.highlightElement(codeContentEl);
+
+    // 绑定行号点击事件
+    document.querySelectorAll('.line-number').forEach(lineNumber => {
+        lineNumber.addEventListener('click', function() {
+            const lineIndex = this.dataset.line;
+            highlightLine(lineIndex, codeContentElId);
+        });
+    });
+
+    // 绑定代码行点击事件
+    document.querySelectorAll('.code-line').forEach(codeLine => {
+        codeLine.addEventListener('click', function() {
+            const lineIndex = this.dataset.line;
+            highlightLine(lineIndex, codeContentElId);
+        });
+    });
+}
+
+// 高亮指定行
+function highlightLine(lineIndex, codeContentElId) {
+    const codeContentEl = document.getElementById(codeContentElId);
+    if (!codeContentEl) return;
+
+    // 清除所有高亮
+    document.querySelectorAll('.code-line').forEach(line => {
+        line.classList.remove('highlight-line');
+    });
+
+    // 高亮当前行
+    const lineEl = codeContentEl.querySelector(`.code-line[data-line="${lineIndex}"]`);
+    if (lineEl) {
+        lineEl.classList.add('highlight-line');
+    }
+}
+
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', function() {
+    initGitHubCodeBlock(hanoiCode, 'hanoi-code-line-numbers', 'hanoi-code-content');
+});
 
 // 辅助函数：判断是否为代码文件
 function isCodeFile(fileType) {
@@ -629,9 +652,10 @@ function getFileActions(file) {
             <a href="${file.file}" target="_blank" class="text-[--color-primary] hover:underline">
                 <i class="fa fa-external-link mr-1"></i>在新标签页打开
             </a>
+            <a href="${file.file}" download class="text-[--color-primary] hover:underline">
+                <i class="fa fa-download mr-1"></i> 下载
+            </a>
         `;
-
-
         return actions;
     } else {
         // 非代码文件使用下载或查看按钮
@@ -642,6 +666,32 @@ function getFileActions(file) {
             </a>
         `;
     }
+}
+
+// 辅助函数：渲染代码文件内容结构
+function renderCodeFileContent(file) {
+    return `
+            <div class="flex flex-col w-full">
+                <div class="w-full" id="code-container">
+                    <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
+                        <span class="text-gray-300 text-sm font-mono">${file.title}</span>
+                    </div>
+                    <pre class="code-view bg-gray-900 text-gray-100 rounded-b-lg p-4 overflow-x-auto">
+                        <div class="text-center py-2">
+                            <i class="fa fa-spinner fa-spin mr-2"></i> 加载中...
+                        </div>
+                    </pre>
+                </div>
+                ${file.type === 'html' ? `
+                    <div class="w-full hidden" id="preview-container">
+                        <div class="bg-gray-800 rounded-t-lg p-2 flex items-center">
+                            <span class="text-gray-300 text-sm font-mono">预览</span>
+                        </div>
+                        <iframe id="preview-frame" class="w-full h-[calc(100vh-300px)] min-h-[500px] border border-gray-200 rounded-b-lg"></iframe>
+                    </div>
+                ` : ''}
+            </div>
+    `;
 }
 
 // 辅助函数：渲染Word文档内容
@@ -793,9 +843,17 @@ function syncPanelHeights() {
         const contentView = panel.querySelector('.content-view');
 
         if (fileTree && contentView) {
-            // 获取左侧文件树的高度（包括内边距和滚动条）
-            const treeHeight = fileTree.offsetHeight;
-            contentView.style.height = `${treeHeight}px`;
+            // 检查当前屏幕宽度是否大于768px（非移动端）
+            const isDesktop = window.innerWidth > 768;
+
+            if (isDesktop) {
+                // 桌面端：同步两侧高度
+                const treeHeight = fileTree.offsetHeight;
+                contentView.style.height = `${treeHeight}px`;
+            } else {
+                // 移动端：清除高度设置，使用CSS自动布局
+                contentView.style.height = '';
+            }
         }
     });
 }

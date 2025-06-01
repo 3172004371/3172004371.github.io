@@ -1,0 +1,30 @@
+body {
+    font-family: "宋体", sans-serif;
+    font-size: 12px;
+}
+
+.calendar-table {
+    border: 1px solid #eee;
+    border-collapse: collapse;
+}
+
+.calendar-header {
+    background-color: #006600;
+    color: white;
+    font-size: 9pt;
+}
+
+.calendar-weekdays td {
+    background-color: #e0e0e0;
+    width: 54px;
+    font-size: 9pt;
+    padding: 5px;
+    text-align: center;
+}
+
+.calendar-table td {
+    border: 1px solid #eee;
+    text-align: center;
+    vertical-align: top;
+    height: 60px;
+}

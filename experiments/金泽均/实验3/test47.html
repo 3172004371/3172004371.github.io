@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>定义嵌套列表</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    ol {
+      counter-reset: item; /* 重置计数器item */
+      list-style-type: none; /* 移除默认的列表样式 */
+    }
+    ol > li {
+      counter-increment: item; /* 仅对外部列表的直接子元素<li>进行计数 */
+      margin-bottom: 5px; /* 为每个外部列表项增加底部外边距 */
+    }
+    ol > li:before {
+      content: counter(item, lower-roman) ". ";
+      font-weight: bold;
+    }
+    ul {
+      list-style-type: square;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<ol>
+  <li>图像设计软件
+    <ul>
+      <li>Photoshop</li>
+      <li>Freehand</li>
+      <li>Illustrator</li>
+      <li>CorelDraw</li>
+    </ul>
+  </li>
+  <li>网页制作软件
+    <ul>
+      <li>Dreamweaver</li>
+      <li>Frontpage</li>
+      <li>Golive</li>
+    </ul>
+  </li>
+</ol>
+</body>
+</html>

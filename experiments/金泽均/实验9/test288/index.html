@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>带农历的日历</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="calendar.js" defer></script>
+</head>
+<body onload="initial()">
+<center>
+    <form name="CLD">
+        <table>
+            <tr>
+                <td align="center">
+                    <table class="calendar-table">
+                        <tr class="calendar-header">
+                            <td colspan="7">
+                                <span>公历</span>
+                                <select name="SY" onchange="changeCld()"></select> 年
+                                <select name="SM" onchange="changeCld()"></select> 月
+                                <span id="GZ"></span>
+                            </td>
+                        </tr>
+                        <tr class="calendar-weekdays">
+                            <td>日</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td>
+                        </tr>
+                        <tbody id="calendar-body"></tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+</center>
+</body>
+</html>

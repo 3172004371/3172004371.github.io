@@ -1,0 +1,208 @@
+/* 小组实验项目目录 */
+.members-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.member-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: var(--color-light);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.member-item:hover {
+    background-color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+
+.member-item i {
+    margin-right: 6px;
+    color: var(--color-primary);
+}
+
+/* 只针对成员列表应用样式，不影响面板 */
+.members-list {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.members-list li {
+    flex: 1; /* 等宽分布 */
+    max-width: 150px; /* 限制最大宽度 */
+    margin: 0 8px; /* 间距 */
+    text-align: center; /* 文本居中 */
+}
+
+.members-list li a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.members-list li.active a {
+    background-color: var(--color-lighter);
+    color: var(--morandi-taupe);
+    font-weight: 600;
+}
+
+.members-list li:hover a {
+    background-color: #e9ecef; /* 悬停效果 */
+}
+
+/* 成员项目展示面板 */
+.member-panel {
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-left: 3px solid var(--color-primary);
+    overflow: hidden;
+}
+
+/* 分栏布局 */
+.panel-header {
+    padding: 12px 16px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-title {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.panel-title i {
+    margin-right: 8px;
+}
+
+.close-panel {
+    cursor: pointer;
+    color: #666;
+}
+
+.close-panel:hover {
+    color: #333;
+}
+
+.panel-content {
+    display: flex;
+    min-height: 400px;
+}
+
+/* 左侧文件树 */
+.file-tree {
+    width: 30%;
+    max-width: 300px;
+    border-right: 1px solid #eee;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.tree-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.tree-item:hover {
+    background-color: #f5f5f5;
+}
+
+.tree-item i {
+    margin-right: 8px;
+}
+
+.tree-item.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.tree-children {
+    padding-left: 16px;
+    margin-left: 8px;
+    border-left: 1px solid #eee;
+    display: none;
+}
+
+.tree-children.expanded {
+    display: block;
+}
+
+/* 右侧内容展示区 */
+.content-view {
+    flex-grow: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+/* 文件夹内容视图 */
+.folder-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.folder-item:hover {
+    background-color: #f0f1f3;
+    transform: translateY(-2px);
+}
+
+.folder-item i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.folder-item span {
+    text-align: center;
+    word-break: break-all;
+}
+
+/* 文件内容视图 */
+.file-content {
+    display: none;
+}
+
+
+/* 代码视图样式 */
+.code-view {
+    padding: 1rem;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    white-space: pre;
+}
+
+/* 预览iframe样式 */
+#preview-container iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+}

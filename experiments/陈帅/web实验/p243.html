@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>警告对话框示例</title>
+</head>
+<body>
+
+<h2>按钮单击事件调用警告对话框</h2>
+<button onclick="testFun()">点击我弹出警告对话框</button>
+
+<h2>链接调用警告对话框</h2>
+<a href="#" onclick="testLinkFun(); return false;">点击链接弹出警告对话框</a>
+
+<script>
+  // 定义函数 testFun，用于弹出警告对话框
+  function testFun() {
+    alert("这是一个通过按钮单击事件调用的警告对话框！");
+  }
+
+  // 定义函数 testLinkFun，用于弹出警告对话框
+  function testLinkFun() {
+    alert("这是一个通过链接调用的警告对话框！");
+  }
+</script>
+
+</body>
+</html>

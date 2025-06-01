@@ -1,0 +1,175 @@
+<section id="tools" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">实用工具</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">我们开发的两个实用工具：页面计算器和待办清单，帮助您更高效地完成日常任务。</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <!-- 计算器 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i class="fa fa-calculator text-primary mr-2"></i> 页面计算器
+                    </h3>
+                </div>
+                <div class="p-6">
+                    <div class="max-w-md mx-auto">
+                        <div class="relative">
+                            <input
+                                    type="text"
+                                    id="calculator-display"
+                                    class="w-full py-4 px-4 text-right text-3xl font-mono bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    placeholder="0"
+                                    oninput="restrictInput()"
+                            >
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-3 mt-4">
+                            <button class="calc-btn bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="AC">
+                                AC
+                            </button>
+                            <button class="calc-btn bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="DEL">
+                                DEL
+                            </button>
+                            <button class="calc-btn bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="%">
+                                %
+                            </button>
+                            <button class="calc-btn bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="/">
+                                ÷
+                            </button>
+
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="7">
+                                7
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="8">
+                                8
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="9">
+                                9
+                            </button>
+                            <button class="calc-btn bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="*">
+                                ×
+                            </button>
+
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="4">
+                                4
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="5">
+                                5
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="6">
+                                6
+                            </button>
+                            <button class="calc-btn bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="-">
+                                -
+                            </button>
+
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="1">
+                                1
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="2">
+                                2
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="3">
+                                3
+                            </button>
+                            <button class="calc-btn bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="+">
+                                +
+                            </button>
+
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="0" colspan="2">
+                                0
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value="00">
+                                00
+                            </button>
+                            <button class="calc-btn bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 px-4 rounded-lg text-lg font-medium transition-colors" data-value=".">
+                                .
+                            </button>
+                            <button class="calc-btn bg-orange-500 hover:bg-orange-600 text-white py-3 px-4 rounded-lg text-lg font-medium transition-colors operator" data-value="=">
+                                =
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 待办清单 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                <div class="p-6 border-b">
+                    <h3 class="text-xl font-bold flex items-center">
+                        <i class="fa fa-list text-primary mr-2"></i> 待办清单
+                    </h3>
+                </div>
+                <div class="p-6">
+                    <div class="max-w-md mx-auto">
+                        <div class="flex mb-6">
+                            <input
+                                    id="todo-input"
+                                    type="text"
+                                    placeholder="添加新任务..."
+                                    class="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            >
+                            <button
+                                    id="add-todo"
+                                    class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg transition-colors"
+                            >
+                                添加
+                            </button>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium">筛选：</span>
+                                <div class="flex space-x-2">
+                                    <button class="filter-btn px-3 py-1 text-sm rounded-full bg-primary text-white">全部</button>
+                                    <button class="filter-btn px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">未完成</button>
+                                    <button class="filter-btn px-3 py-1 text-sm rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">已完成</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="todo-list" class="space-y-3">
+                            <!-- 待办事项会动态添加到这里 -->
+                            <div class="todo-item flex items-center p-3 bg-gray-50 rounded-lg">
+                                <input type="checkbox" class="mr-3 h-5 w-5 accent-primary">
+                                <span class="flex-1">完成前端综合项目设计</span>
+                                <button class="text-gray-400 hover:text-red-500 transition-colors mr-2">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="todo-item flex items-center p-3 bg-gray-50 rounded-lg">
+                                <input type="checkbox" class="mr-3 h-5 w-5 accent-primary" checked>
+                                <span class="flex-1 line-through text-gray-500">学习CSS Grid布局</span>
+                                <button class="text-gray-400 hover:text-red-500 transition-colors mr-2">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="todo-item flex items-center p-3 bg-gray-50 rounded-lg">
+                                <input type="checkbox" class="mr-3 h-5 w-5 accent-primary">
+                                <span class="flex-1">准备项目演示文稿</span>
+                                <button class="text-gray-400 hover:text-red-500 transition-colors mr-2">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="text-gray-400 hover:text-red-500 transition-colors">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-sm text-gray-500">
+                            <span id="todo-count">2</span> 个未完成任务，<span id="completed-count">1</span> 个已完成任务
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

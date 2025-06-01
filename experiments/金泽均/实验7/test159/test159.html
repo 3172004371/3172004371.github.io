@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <!-- 内嵌式样式 -->
+  <style>
+    /* 导入式 */
+    @import url("styles_import.css");
+
+    /* 内嵌式 */
+    .embedded {
+      color: blue;
+      font-size: 16px;
+    }
+  </style>
+
+  <!-- 链接式样式 -->
+  <link rel="stylesheet" href="styles_link.css">
+
+  <title>CSS 应用示例</title>
+</head>
+<body>
+<!-- 内联式样式 -->
+<p style="color: red; font-size: 20px;">这是使用内联样式的段落。</p>
+
+<!-- 使用内嵌式样式的元素 -->
+<p class="embedded">这是使用内嵌样式的段落。</p>
+
+<!-- 使用链接式样式的元素 -->
+<p class="linked">这是使用链接样式的段落。</p>
+
+<!-- 使用导入式样式的元素 -->
+<p class="imported">这是使用导入样式的段落。</p>
+</body>
+</html>

@@ -1,0 +1,29 @@
+/* 使用 p 标签选择器 */
+p {
+    font-weight: bold;
+    color: red;
+}
+
+/* 使用类选择器 */
+.bold-red {
+    font-weight: bold;
+    color: red;
+}
+
+/* 使用ID选择器 */
+#first-paragraph {
+    font-weight: bold;
+    color: red;
+}
+
+/* 使用属性选择器 */
+p[lang="zh"] {
+    font-weight: bold;
+    color: red;
+}
+
+/* 使用伪类选择器 */
+p:first-of-type {
+    font-weight: bold;
+    color: red;
+}

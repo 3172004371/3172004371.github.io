@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <title>产品订购</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+    table,
+    td {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+<table>
+  <tr>
+    <td>
+      <form action="#" method="post">
+        <table>
+          <caption>产品订购</caption>
+          <tr>
+            <td>姓名：</td>
+            <td><input type="text" name="name"></td>
+            <td>商品名称：</td>
+            <td><input type="text" name="product"></td>
+          </tr>
+          <tr>
+            <td>地区：</td>
+            <td>
+              <select name="region">
+                <option value="guangzhou">广州</option>
+                <!-- 可添加更多地区选项 -->
+              </select>
+            </td>
+            <td>付款方式：</td>
+            <td>
+              <input type="radio" name="payment" value="online"> 网上
+              <input type="radio" name="payment" value="postoffice"> 邮局
+              <input type="radio" name="payment" value="bank"> 银行
+            </td>
+          </tr>
+          <tr>
+            <td>关注产品：</td>
+            <td colspan="3">
+              <input type="checkbox" name="productInterest" value="skincare"> 护肤品
+              <input type="checkbox" name="productInterest" value="cosmetics"> 化妆品
+              <input type="checkbox" name="productInterest" value="clothes"> 服装
+              <input type="checkbox" name="productInterest" value="electronics"> 电器
+            </td>
+          </tr>
+          <tr>
+            <td>联系电话：</td>
+            <td colspan="3"><input type="text" name="phone"></td>
+          </tr>
+          <tr>
+            <td>备注：</td>
+            <td colspan="3"><textarea name="remark" rows="5" cols="30"></textarea></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align: center;">
+              <input type="submit" value="提交">
+              <input type="reset" value="重置">
+            </td>
+          </tr>
+        </table>
+      </form>
+    </td>
+  </tr>
+</table>
+</body>
+
+</html>

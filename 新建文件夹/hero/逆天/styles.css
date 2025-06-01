@@ -1,0 +1,204 @@
+/* 导入字体（如有需要） */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* 莫兰迪配色方案定义 */
+:root {
+    /* 主色调 - 灰紫色 */
+    --color-primary: #9C88FF;       /* 主色 */
+    --color-primary-dark: #8A77E6;   /* 主色深 */
+    --color-primary-light: #F9F7FF;  /* 主色浅 */
+
+    /* 辅助色 - 淡粉紫和靛蓝 */
+    --color-secondary: #D6A2E8;      /* 淡粉紫 */
+    --color-secondary-dark: #C98FE0; /* 淡粉紫深 */
+    --color-accent: #8470FF;         /* 靛蓝 */
+    --color-accent-dark: #7259E6;    /* 靛蓝深 */
+
+    /* 中性色 */
+    --color-dark: #424242;           /* 深灰文本 */
+    --color-medium: #666666;         /* 中灰文本 */
+    --color-light: #F5F5F5;          /* 浅灰背景 */
+    --color-lighter: #E0E0E0;        /* 中灰背景/边框 */
+    --color-white: #FFFFFF;          /* 白色 */
+    --color-error: #FFB380;          /* 低饱和橙红（错误提示） */
+
+    /* 阴影和过渡 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.3s ease;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+
+/* 容器样式 */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+
+/* 移动端菜单容器样式 */
+#mobile-menu {
+    position: fixed;
+    top: 64px; /* 导航栏高度 */
+    left: -100%;
+    width: 100%;
+    max-width: 100%; /* 最大宽度，确保在大屏幕上不会过宽 */
+    height: calc(100vh - 64px); /* 减去导航栏高度 */
+    background: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 49; /* 确保在导航栏下方一层 */
+    display: flex; /* 使用flex布局便于内容居中 */
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* 平滑过渡效果 */
+}
+
+/* 激活状态 - 显示菜单 */
+#mobile-menu.active {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 菜单内容样式 - 居中显示 */
+#mobile-menu .px-4.py-3 {
+    width: 100%;
+    max-width: 100%; /* 内容区最大宽度，留出边距 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 内容水平居中 */
+}
+
+#mobile-menu .px-4.py-3 a {
+    text-align: center; /* 文字居中 */
+    padding: 0.5rem 0; /* 增加垂直内边距 */
+    width: 100%; /* 菜单项占满宽度 */
+}
+
+/* 导航栏滚动效果增强 */
+#navbar {
+    height: 64px; /* 固定导航栏高度 */
+}
+
+/* 深色模式兼容 */
+.dark #mobile-menu {
+    background: #1D2939;
+}
+
+
+/* 自定义工具类 */
+.content-auto {
+    content-visibility: auto;
+}
+
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-primary:hover {
+    background-color: #7259E6;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(22, 93, 255, 0.05);
+}
+
+/* 新增计算器样式 */
+.calc-btn {
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.calc-btn:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+.operator[data-value="="] {
+    background-color: #7259E6;
+}
+
+/* 汉诺塔盘子样式 */
+.hanoi-disk {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 深色模式支持 */
+.dark {
+    --color-light: #1D2939;
+    --color-dark: #F9FAFB;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.dark .bg-white {
+    background-color: #2E3B55;
+}
+
+.dark .text-dark {
+    color: var(--color-dark);
+}
+
+.dark .text-light {
+    color: var(--color-light);
+}
+
+.dark .bg-gray-50 {
+    background-color: #374151;
+}
+
+.dark .border-gray-200 {
+    border-color: #4B5563;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.dark .fa-arrow-up  {
+    color: #ffffff;
+}

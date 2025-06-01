@@ -1,0 +1,476 @@
+/* 莫兰迪配色方案定义 */
+:root {
+    /* 主色调 - 灰紫色 */
+    --color-primary: #9C88FF;       /* 主色 */
+    --color-primary-dark: #8A77E6;   /* 主色深 */
+    --color-primary-light: #F9F7FF;  /* 主色浅 */
+
+    /* 辅助色 - 淡粉紫和靛蓝 */
+    --color-secondary: #D6A2E8;      /* 淡粉紫 */
+    --color-secondary-dark: #C98FE0; /* 淡粉紫深 */
+    --color-accent: #8470FF;         /* 靛蓝 */
+    --color-accent-dark: #7259E6;    /* 靛蓝深 */
+
+    /* 中性色 */
+    --color-dark: #424242;           /* 深灰文本 */
+    --color-medium: #666666;         /* 中灰文本 */
+    --color-light: #F5F5F5;          /* 浅灰背景 */
+    --color-lighter: #E0E0E0;        /* 中灰背景/边框 */
+    --color-white: #FFFFFF;          /* 白色 */
+    --color-error: #FFB380;          /* 低饱和橙红（错误提示） */
+
+    /* 阴影和过渡 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.3s ease;
+
+    /* 莫兰迪色系 - 柔和、高级感 */
+    /* 场景：适合用于界面背景、按钮、边框等，营造优雅、舒适的视觉效果 */
+    --morandi-beige: #DDBEA9;        /* 米色，柔和温暖，适合背景色 */
+    --morandi-taupe: #A1887F;        /* 鼠尾草色，低调沉稳，适合边框或按钮 */
+    --morandi-olive: #A6B99B;        /* 橄榄绿，清新自然，适合按钮或图标 */
+    --morandi-gray: #B0BEC5;         /* 灰色，柔和中性，适合文本或边框 */
+    --morandi-pink: #E0C3DC;         /* 淡粉色，柔和甜美，适合按钮或背景 */
+    --morandi-green: #96C8A2;        /* 绿色，清新自然，适合按钮或图标 */
+    --morandi-blue: #AEC6CF;         /* 蓝色，清新宁静，适合背景或按钮 */
+    --morandi-brown: #A17A68;        /* 棕色，温暖沉稳，适合边框或按钮 */
+    --morandi-purple: #B39DDB;       /* 紫色，柔和优雅，适合按钮或背景 */
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+    transform: translateY(-2px);
+}
+
+/* 移动端菜单容器样式 */
+#mobile-menu {
+    position: fixed;
+    top: 64px; /* 导航栏高度 */
+    left: -100%;
+    width: 100%;
+    max-width: 100%; /* 最大宽度，确保在大屏幕上不会过宽 */
+    height: calc(100vh - 64px); /* 减去导航栏高度 */
+    background: white;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 49; /* 确保在导航栏下方一层 */
+    display: flex; /* 使用flex布局便于内容居中 */
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* 平滑过渡效果 */
+}
+/* 激活状态 - 显示菜单 */
+#mobile-menu.active {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+}
+/* 菜单内容样式 - 居中显示 */
+#mobile-menu .px-4.py-3 {
+    width: 100%;
+    max-width: 100%; /* 内容区最大宽度，留出边距 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 内容水平居中 */
+}
+#mobile-menu .px-4.py-3 a {
+    text-align: center; /* 文字居中 */
+    padding: 0.5rem 0; /* 增加垂直内边距 */
+    width: 100%; /* 菜单项占满宽度 */
+}
+/* 导航栏滚动效果增强 */
+#navbar {
+    height: 64px; /* 固定导航栏高度 */
+}
+/* 深色模式兼容 */
+.dark #mobile-menu {
+    background: #1D2939;
+}
+
+
+/* 小组实验项目目录 */
+.members-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.member-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: var(--color-light);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.member-item:hover {
+    background-color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+
+.member-item i {
+    margin-right: 6px;
+    color: var(--color-primary);
+}
+
+/* 只针对成员列表应用样式，不影响面板 */
+.members-list {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.members-list li {
+    flex: 1; /* 等宽分布 */
+    max-width: 150px; /* 限制最大宽度 */
+    margin: 0 8px; /* 间距 */
+    text-align: center; /* 文本居中 */
+}
+
+.members-list li a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.members-list li.active a {
+    background-color: var(--color-lighter);
+    color: var(--morandi-taupe);
+    font-weight: 600;
+}
+
+.members-list li:hover a {
+    background-color: #e9ecef; /* 悬停效果 */
+}
+
+/* 成员项目展示面板 */
+.member-panel {
+    margin-top: 15px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-left: 3px solid var(--color-primary);
+    overflow: hidden;
+}
+
+/* 分栏布局 */
+.panel-header {
+    padding: 12px 16px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-title {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.panel-title i {
+    margin-right: 8px;
+}
+
+.close-panel {
+    cursor: pointer;
+    color: #666;
+}
+
+.close-panel:hover {
+    color: #333;
+}
+
+/* 面板内容容器 - 为JS操作添加标识 */
+.panel-content {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    min-height: 400px;
+    gap: 1px;
+    position: relative; /* 为绝对定位做准备 */
+}
+
+/* 左侧文件树 - 确保高度可计算 */
+.file-tree {
+    padding: 16px;
+    overflow-y: auto;
+    border-right: 1px solid #eee;
+    height: auto; /* 允许高度动态变化 */
+}
+
+
+.tree-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.tree-item:hover {
+    background-color: #f5f5f5;
+}
+
+.tree-item i {
+    margin-right: 8px;
+}
+
+.tree-item.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+}
+
+.tree-children {
+    padding-left: 16px;
+    margin-left: 8px;
+    border-left: 1px solid #eee;
+    display: none;
+}
+
+.tree-children.expanded {
+    display: block;
+}
+
+/* 右侧内容区 - 使用绝对定位实现高度同步 */
+.content-view {
+    padding: 16px;
+    overflow-y: auto;
+    min-width: 0;
+    position: absolute; /* 绝对定位以贴合左侧高度 */
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 75%; /* 与Grid布局比例一致 */
+}
+
+/* 文件夹内容视图 */
+.folder-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.folder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.folder-item:hover {
+    background-color: #f0f1f3;
+    transform: translateY(-2px);
+}
+
+.folder-item i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.folder-item span {
+    text-align: center;
+    word-break: break-all;
+}
+
+/* 文件内容视图 */
+.file-content {
+    width: 100%;
+}
+
+/* 代码视图样式 */
+.code-view {
+    padding: 1rem;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1;
+    white-space: pre;
+    overflow-x: auto;
+    background-color: #f8f9fa; /* 浅灰背景 */
+    border: 1px solid #eaecef;
+}
+
+/* 代码行容器 - 修改为flex布局并垂直居中 */
+.code-line {
+    display: flex;
+    align-items: center; /* 垂直居中 */
+    white-space: pre;
+    padding: 0.25rem 0; /* 减少行间距 */
+    border-radius: 2px;
+}
+
+/* 行号样式 - 固定宽度并右对齐 */
+.line-number {
+    color: #6c757d;
+    user-select: none;
+    text-align: right;
+    min-width: 2.5rem; /* 缩小行号宽度 */
+    padding-right: 1rem;
+    margin-right: 1rem; /* 增加行号与代码的间距 */
+    opacity: 0.7;
+    border-right: 1px solid #eaecef; /* 细分隔线 */
+}
+
+/* 代码内容样式 */
+.line-content {
+    word-break: break-all;
+    white-space: pre-wrap;
+    flex: 1;
+    font-feature-settings: "calt"; /* 优化字体连字 */
+}
+
+/* 悬停效果 */
+.code-line:hover {
+    background-color: #f0f1f3; /* 浅灰背景 */
+}
+
+/* 选中行样式（可用于高亮当前行） */
+.code-line.active-line {
+    background-color: #e6f7ff; /* 淡蓝色背景 */
+}
+
+/* 空状态提示 */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    color: #6c757d;
+}
+
+/* 媒体查询，当屏幕宽度小于 768px 时调整布局 */
+@media (max-width: 768px) {
+    .code-view {
+        font-size: 0.75rem;
+    }
+    .panel-content {
+        grid-template-columns: 1fr; /* 单列布局 */
+    }
+    .file-tree {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+
+}
+
+/* 自定义工具类 */
+.content-auto {
+    content-visibility: auto;
+}
+
+.text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.btn-primary:hover {
+    background-color: #7259E6;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(22, 93, 255, 0.05);
+}
+
+/* 新增计算器样式 */
+.calc-btn {
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.calc-btn:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+.operator[data-value="="] {
+    background-color: #7259E6;
+}
+
+/* 汉诺塔盘子样式 */
+.hanoi-disk {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 深色模式支持 */
+.dark {
+    --color-light: #1D2939;
+    --color-dark: #F9FAFB;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+}
+
+.dark .bg-white {
+    background-color: #2E3B55;
+}
+
+.dark .text-dark {
+    color: var(--color-dark);
+}
+
+.dark .text-light {
+    color: var(--color-light);
+}
+
+.dark .bg-gray-50 {
+    background-color: #374151;
+}
+
+.dark .border-gray-200 {
+    border-color: #4B5563;
+}
+
+.dark .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.dark .fa-arrow-up  {
+    color: #ffffff;
+}

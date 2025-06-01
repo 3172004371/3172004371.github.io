@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册与颜色选择</title>
+  <style>
+    .default-bg {
+      background-color: white;
+    }
+    .focused-bg {
+      background-color: lightblue;
+    }
+  </style>
+</head>
+<body>
+
+<h2>用户注册</h2>
+<form id="registrationForm">
+  <label for="username">用户名:</label>
+  <input type="text" id="username" class="default-bg" onfocus="changeBackgroundColor(this)" onblur="resetBackgroundColor(this)">
+  <br><br>
+  <label for="email">邮箱:</label>
+  <input type="email" id="email" class="default-bg" onfocus="changeBackgroundColor(this)" onblur="resetBackgroundColor(this)">
+  <br><br>
+  <label for="password">密码:</label>
+  <input type="password" id="password" class="default-bg" onfocus="changeBackgroundColor(this)" onblur="resetBackgroundColor(this)">
+</form>
+
+<br><br>
+
+<h2>字体颜色选择</h2>
+<label for="colorSelect">选择颜色:</label>
+<select id="colorSelect" onchange="changeTextColor()">
+  <option value="black">黑色</option>
+  <option value="red">红色</option>
+  <option value="green">绿色</option>
+  <option value="blue">蓝色</option>
+</select>
+<p id="textToChangeColor">这段文本的颜色会根据你的选择改变。</p>
+
+<script>
+  function changeBackgroundColor(inputElement) {
+    inputElement.className = "focused-bg";
+  }
+
+  function resetBackgroundColor(inputElement) {
+    inputElement.className = "default-bg";
+  }
+
+  function changeTextColor() {
+    var selectedColor = document.getElementById("colorSelect").value;
+    document.getElementById("textToChangeColor").style.color = selectedColor;
+  }
+</script>
+
+</body>
+</html>

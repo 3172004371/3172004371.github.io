@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉诺塔游戏</title>
+    <link rel="stylesheet" href="hanoi.css">
+</head>
+<body>
+    <h1>汉诺塔游戏</h1>
+    <div id="controls">
+        <div class="control-group">
+            <label for="diskCount">盘片数量 (4-8):</label>
+            <input type="number" id="diskCount" min="4" max="8" value="4">
+        </div>
+        <div class="control-group">
+            <label for="speed">动画速度:</label>
+            <select id="speed">
+                <option value="800">慢速</option>
+                <option value="400" selected>中速</option>
+                <option value="200">快速</option>
+            </select>
+        </div>
+        <div class="buttons">
+            <button id="startAnimation">自动求解</button>
+            <button id="startManual">手动模式</button>
+            <button id="reset">重置游戏</button>
+        </div>
+    </div>
+    
+    <div id="hanoi">
+        <div class="tower" id="tower1" data-tower="1"></div>
+        <div class="tower" id="tower2" data-tower="2"></div>
+        <div class="tower" id="tower3" data-tower="3"></div>
+    </div>
+    
+    <div id="stats">
+        <div>当前步数: <span id="currentSteps">0</span></div>
+        <div>最优步数: <span id="optimalSteps">0</span></div>
+        <div id="status">状态: 准备就绪</div>
+    </div>
+    
+    <div id="instructions">
+        <h3>操作说明</h3>
+        <p><strong>手动模式</strong>: 点击柱子选择顶部的盘片，再点击目标柱子移动</p>
+        <p><strong>自动求解</strong>: 点击"自动求解"观看计算机解法</p>
+        <p><strong>目标</strong>: 将所有盘片移动到最右侧柱子</p>
+    </div>
+    
+    <script src="hanoi.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!-- 图床网站 -->
+<section id="gallery" class="py-16 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-4">图床网站</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">展示我们的原创图片作品，支持缩略图浏览和大图查看功能。</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+      <div class="p-6 border-b">
+        <h3 class="text-xl font-bold flex items-center">
+          <i class="fa fa-image text-primary mr-2"></i> 图片画廊
+        </h3>
+      </div>
+
+      <div class="p-6">
+        <!-- 图片上传区域（可选） -->
+        <div class="mb-8 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary transition-colors">
+          <i class="fa fa-cloud-upload text-4xl text-gray-400 mb-4"></i>
+          <h4 class="text-lg font-medium mb-2">上传图片</h4>
+          <p class="text-gray-500 mb-4">点击或拖拽图片到此处上传</p>
+          <button class="btn-primary">
+            选择图片 <i class="fa fa-picture-o ml-2"></i>
+          </button>
+        </div>
+
+        <!-- 图片展示区域 -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
+          <!-- 缩略图 -->
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=10" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=11" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=12" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=13" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=14" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=15" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=16" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=17" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=18" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+          <div class="gallery-thumb cursor-pointer rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <img src="https://picsum.photos/300/200?random=19" alt="风景图片" class="w-full h-40 object-cover">
+          </div>
+        </div>
+
+        <!-- 大图查看模态框 -->
+        <div id="image-viewer" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+          <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden">
+            <div class="flex justify-between items-center p-4 border-b">
+              <h4 class="font-medium">图片详情</h4>
+              <button id="close-viewer" class="text-gray-500 hover:text-gray-800">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+            <div class="p-4">
+              <div class="relative">
+                <img id="fullsize-image" src="https://picsum.photos/1200/800?random=10" alt="大图查看" class="w-full h-auto max-h-[70vh] object-contain">
+                <button id="prev-image" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                  <i class="fa fa-chevron-left"></i>
+                </button>
+                <button id="next-image" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white text-gray-800 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                  <i class="fa fa-chevron-right"></i>
+                </button>
+              </div>
+              <div class="mt-4">
+                <h5 id="image-title" class="font-medium text-lg">自然风光</h5>
+                <p id="image-desc" class="text-gray-600">拍摄于山间的自然风光照片，展示了大自然的美丽与宁静。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

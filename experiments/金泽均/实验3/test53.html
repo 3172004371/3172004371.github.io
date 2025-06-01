@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在网页中插入图片</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.03);
+        }
+
+        .top-img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .bottom-img-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .bottom-img-container img {
+            flex: 1 1 calc(50% - 10px);
+            min-width: 200px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <img src="tangan.jpg" class="top-img" alt="tangan"/>
+    <div class="bottom-img-container">
+        <img src="rabbit.jpg" alt="rabbit"/>
+        <img src="rabbit.jpg" alt="rabbit"/>
+    </div>
+</div>
+</body>
+
+
+</html>

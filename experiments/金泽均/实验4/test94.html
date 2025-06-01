@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web 教材超链接演示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 p-8">
+<h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Web 教材超链接演示</h1>
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">外部链接</h2>
+    <p class="text-gray-600 mb-2">点击下面的链接访问百度：</p>
+    <a href="https://www.baidu.com" target="_blank"
+       class="text-blue-600 hover:text-blue-800 hover:underline">百度</a>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">内部链接</h2>
+    <p class="text-gray-600 mb-2">假设这是一个多页面网站，点击下面的链接访问关于我们页面：</p>
+    <a href="about.html" class="text-blue-600 hover:text-blue-800 hover:underline">关于我们</a>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">邮件链接</h2>
+    <p class="text-gray-600 mb-2">点击下面的链接给我们发送邮件：</p>
+    <a href="mailto:example@example.com" class="text-blue-600 hover:text-blue-800 hover:underline">发送邮件</a>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">锚点链接</h2>
+    <p class="text-gray-600 mb-2">点击下面的链接跳转到页面底部：</p>
+    <a href="#bottom" class="text-blue-600 hover:text-blue-800 hover:underline">跳到底部</a>
+    <div id="bottom" class="mt-12 border-t pt-6">
+        <p class="text-gray-600">这是页面底部。</p>
+    </div>
+</div>
+<div class="bg-white p-6 rounded-lg shadow-md mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">下载链接</h2>
+    <p class="text-gray-600 mb-2">点击下面的链接下载示例文件：</p>
+    <a href="example.pdf" download class="text-blue-600 hover:text-blue-800 hover:underline">下载文件</a>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript对象与功能示例</title>
+</head>
+<body>
+
+<h2>(1) 创建数组、删除元素并输出</h2>
+<button onclick="handleArray()">点击执行操作</button>
+<p id="arrayOutput"></p>
+
+<h2>(2) 字符串替换</h2>
+<button onclick="replaceString()">点击进行字符串替换</button>
+<p id="stringOutput">原始字符串：广州大学华软软件学院</p>
+
+<h2>(3) 使用Window对象创建对话框</h2>
+<!-- 分开的按钮 -->
+<button onclick="showConfirmDialog()">显示确认对话框</button><br><br>
+<button onclick="showPromptDialog()">显示提示对话框</button><br><br>
+<button onclick="showAlertDialog()">显示信息提示对话框</button>
+
+<h2>(4) 动态显示系统时间</h2>
+<h3>当前系统时间：</h3>
+<p id="currentTime"></p>
+
+<script>
+  // (1) 创建数组、删除元素并输出
+  function handleArray() {
+    let initialArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let arrayAfterDelete = initialArray.slice();
+    let deletedElement = arrayAfterDelete.splice(1, 1)[0];
+
+    document.getElementById("arrayOutput").innerHTML =
+            `初始数组：${initialArray}<br>删除的元素值：${deletedElement}<br>删除后剩余元素的值：${arrayAfterDelete}`;
+  }
+
+  // (2) 字符串替换
+  function replaceString() {
+    let originalString = "广州大学华软软件学院";
+    let replacedString = originalString.replace(originalString, "JavaScript编程语言");
+    document.getElementById("stringOutput").innerText = `替换后的字符串：${replacedString}`;
+  }
+
+  // (3) 使用Window对象创建不同对话框
+  function showConfirmDialog() {
+    let confirmResult = window.confirm("这是一个确认对话框。点击确定或取消。");
+    if (confirmResult) console.log("用户点击了确定。");
+    else console.log("用户点击了取消。");
+  }
+
+  function showPromptDialog() {
+    let promptResult = window.prompt("这是一个提示对话框。请输入一些内容：", "");
+    if (promptResult !== null) {
+      console.log("用户输入的内容：", promptResult);
+    } else {
+      console.log("用户取消了输入。");
+    }
+  }
+
+  function showAlertDialog() {
+    window.alert("这是一个信息提示对话框。");
+  }
+
+  // (4) 动态显示系统时间
+  function displayTime() {
+    let date = new Date();
+    let timeString = date.toLocaleTimeString();
+    document.getElementById("currentTime").innerText = timeString;
+  }
+
+  setInterval(displayTime, 1000);
+  displayTime(); // 页面加载时立即显示当前时间
+</script>
+
+</body>
+</html>

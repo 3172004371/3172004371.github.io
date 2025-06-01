@@ -1,0 +1,19 @@
+/* styles.css */
+
+/* 字体样式 */
+.text-style {
+    font-family: 宋体;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+/* 区块样式 */
+.block-style {
+    width: 500px;
+    height: 500px;
+    background-color: lightblue;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,120 @@
+/* styles.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    background: #e9fbff;
+}
+
+#container {
+    position: relative;
+    margin: 0 auto;
+    width: 700px;
+    text-align: left;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#banner img {
+    width: 100%;
+    height: auto;
+    border: 0;
+}
+
+#links ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#links li {
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+}
+
+#links a {
+    text-decoration: none;
+    color: #333;
+}
+
+.left-content, .main-content {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.left-content {
+    width: 25%;
+    float: left;
+    background-color: #f9f9f9;
+}
+
+.main-content {
+    width: 75%;
+    float: left;
+    background-color: #ffffff;
+}
+
+.content-section {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* ========== 新增样式 ========== */
+
+/* 添加下划线到所有 content-section 的 h2 */
+.content-section h2 {
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+
+/* 图片下方文字居中 */
+.diary, .mood {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.diary img, .mood img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* 避免底部空白间隙 */
+    margin: 0 auto 10px; /* 图片居中 + 下边距 */
+}
+
+.journey-section .journey-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0; /* 去除间隙 */
+}
+
+.journey-section pre {
+    flex: 1;
+    margin: 0;
+    padding: 0; /* 清除默认内边距 */
+}
+
+.journey-section img {
+    max-width: 70%;
+    height: auto;
+    margin: 0;
+    padding: 0; /* 清除默认内边距 */
+    object-fit: contain; /* 防止图片变形 */
+}
+
+#footer {
+    clear: both;
+    margin-top: 30px;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+}
